@@ -21,9 +21,26 @@ form.addEventListener("submit", async (e) => {
   const password = document.getElementById("login-password").value;
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    const userRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(userRef);
+    let role = "user";
+
+    if (docSnap.exists()) {
+      role = docSnap.data().role;
+    } else if (email === ADMIN_EMAIL) {
+      role = "admin";
+    }
+
+    localStorage.setItem("uid", user.uid);
+    localStorage.setItem("email", user.email);
+    localStorage.setItem("username", user.displayName || "");
+    localStorage.setItem("role", role);
+
     alert("Login Successfully!");
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   } catch (error) {
     alert("error: " + error.message);
   }
@@ -38,24 +55,35 @@ if (googleLoginBtn) {
       const userRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userRef);
 
+      let role = "user";
       if (!docSnap.exists()) {
+        role = user.email === ADMIN_EMAIL ? "admin" : "user";
         await setDoc(userRef, {
           uid: user.uid,
           email: user.email,
           username: user.displayName,
           photoURL: user.photoURL,
-          role: user.email === ADMIN_EMAIL ? "admin" : "user",
+          role: role,
           createdAt: serverTimestamp()
         });
+      } else {
+        role = docSnap.data().role;
       }
 
+      localStorage.setItem("uid", user.uid);
+      localStorage.setItem("email", user.email);
+      localStorage.setItem("username", user.displayName || "");
+      localStorage.setItem("photoURL", user.photoURL || "");
+      localStorage.setItem("role", role);
+
       alert(`Signed in as ${user.displayName}`);
-      window.location.href = "index.html";
+      window.location.href = "../index.html";
     } catch (error) {
       alert("error: " + error.message);
     }
   });
 }
+
 
 
 

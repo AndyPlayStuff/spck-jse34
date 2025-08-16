@@ -27,16 +27,23 @@ form.addEventListener("submit", async (e) => {
 
     await updateProfile(user, { displayName: username });
 
+    const role = user.email === ADMIN_EMAIL ? "admin" : "user";
+
     await setDoc(doc(db, "users", user.uid), {
       uid: user.uid,
       email: user.email,
       username: username,
-      role: user.email === ADMIN_EMAIL ? "admin" : "user", 
+      role: role,
       createdAt: serverTimestamp()
     });
 
+    localStorage.setItem("uid", user.uid);
+    localStorage.setItem("email", user.email);
+    localStorage.setItem("username", username);
+    localStorage.setItem("role", role);
+
     alert("Register successfully!");
-    window.location.href = "login.html";
+    window.location.href = "../index.html"; 
   } catch (error) {
     alert("Error: " + error.message);
     console.error(error.code, error.message);
@@ -53,19 +60,29 @@ googleRegisterBtn.addEventListener("click", async () => {
     const userRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(userRef);
 
+    let role = "user";
     if (!docSnap.exists()) {
+      role = user.email === ADMIN_EMAIL ? "admin" : "user";
       await setDoc(userRef, {
         uid: user.uid,
         email: user.email,
         username: user.displayName,
         photoURL: user.photoURL,
-        role: user.email === ADMIN_EMAIL ? "admin" : "user",
+        role: role,
         createdAt: serverTimestamp()
       });
+    } else {
+      role = docSnap.data().role;
     }
 
+    localStorage.setItem("uid", user.uid);
+    localStorage.setItem("email", user.email);
+    localStorage.setItem("username", user.displayName);
+    localStorage.setItem("photoURL", user.photoURL || "");
+    localStorage.setItem("role", role);
+
     alert(`Registered as ${user.displayName}`);
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   } catch (error) {
     alert("Google Sign-In Error: " + error.message);
     console.error(error.code, error.message);
