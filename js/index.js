@@ -9,7 +9,7 @@
 
     document.getElementById("logout").addEventListener("click", () => {
       signOut(auth).then(() => {
-        window.location.href = "login.html";
+        window.location.href = "../html/login.html";
       });
     });
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -18,7 +18,7 @@
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       
-      window.location.href = "login.html";
+      window.location.href = "../html/login.html";
     }
   });
   
