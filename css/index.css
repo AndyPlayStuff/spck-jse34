@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: url('https://wallpaperaccess.com/full/39617.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #fff;
+}
+
+#logout-btn {
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#logout-btn:hover {
+  background-color: #e53935;
+}
+
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.welcome-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.welcome-card h2 {
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.welcome-card p {
+  font-size: 16px;
+  color: #ddd;
+}
