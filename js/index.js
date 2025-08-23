@@ -1,27 +1,4 @@
-    import { auth } from './firebase-config.js';
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
-
-    document.getElementById("logout").addEventListener("click", () => {
-      signOut(auth).then(() => {
-        window.location.href = "../html/login.html";
-      });
-    });
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      
-      window.location.href = "../html/login.html";
-    }
-  });
-  
   import { v2 as cloudinary } from 'cloudinary';
 
 (async function() {
@@ -60,3 +37,27 @@
     
     console.log(autoCropUrl);    
 })();
+
+async function loadArticles() {
+  const snapshot = await getDocs(collection(db, "articles"));
+  const container = document.getElementById("articles");
+  container.innerHTML = ""; 
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+
+    
+    const articleEl = document.createElement("div");
+    articleEl.classList.add("article");
+
+    articleEl.innerHTML = `
+      <h3>${data.title || "No title"}</h3>
+      <p>${data.description || "No description"}</p>
+      <p><strong>Price:</strong> ${data.price || "N/A"} VND</p>
+    `;
+
+    container.appendChild(articleEl);
+  });
+}
+
+loadArticles();
