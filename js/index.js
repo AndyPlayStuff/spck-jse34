@@ -1,4 +1,6 @@
 
+
+
   import { v2 as cloudinary } from 'cloudinary';
 
 (async function() {
@@ -38,25 +40,13 @@
     console.log(autoCropUrl);    
 })();
 
+import { db } from "./firebase-config.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 async function loadArticles() {
   const snapshot = await getDocs(collection(db, "articles"));
-  const container = document.getElementById("articles");
-  container.innerHTML = ""; 
-
   snapshot.forEach(doc => {
-    const data = doc.data();
-
-    
-    const articleEl = document.createElement("div");
-    articleEl.classList.add("article");
-
-    articleEl.innerHTML = `
-      <h3>${data.title || "No title"}</h3>
-      <p>${data.description || "No description"}</p>
-      <p><strong>Price:</strong> ${data.price || "N/A"} VND</p>
-    `;
-
-    container.appendChild(articleEl);
+    console.log(doc.id, " => ", doc.data());
   });
 }
 

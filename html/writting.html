@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm Bài Báo Về Game</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <h2>📰 Thêm Bài Báo Về Game</h2>
+  <form id="article-form">
+    <label>Tiêu đề</label><br>
+    <input type="text" id="title" required><br><br>
+
+    <label>Tác giả</label><br>
+    <input type="text" id="author" required><br><br>
+
+    <label>Nội dung</label><br>
+    <textarea id="content" rows="6" required></textarea><br><br>
+
+    <label>Ảnh minh họa (URL)</label><br>
+    <input type="url" id="imageUrl"><br><br>
+
+    <button type="submit">Thêm Bài Báo</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script type="module" src="../js/add-article.js"></script>
+</body>
+</html>
